@@ -10,9 +10,9 @@
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="icon" href="icon.svg">
-  <meta name="app-version" content="2611101151">
+  <meta name="app-version" content="2611101154">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <link rel="stylesheet" href="style.css?v=2611101151">
+  <link rel="stylesheet" href="style.css?v=2611101154">
   <title>數學觀念練習</title>
 </head>
 <body>
@@ -28,8 +28,9 @@
 
       <h3>題型</h3>
       <div class="seg" data-name="kind">
+        <button data-value="core">精華題<small class="seg-note">最少題數</small></button>
         <button data-value="concept">觀念題<small class="seg-note">不用計算</small></button>
-        <button data-value="practice">計算・填空</button>
+        <button data-value="practice">計算<br>填空</button>
         <button data-value="all">全部</button>
       </div>
 
@@ -39,12 +40,14 @@
       <div id="scope-topics" class="chips"></div>
       <p id="scope-info" class="msg small" style="margin-top:10px"></p>
 
+      <div id="count-box">
       <h3>題數</h3>
       <div class="seg" data-name="count">
         <button data-value="10">10</button>
         <button data-value="20">20</button>
         <button data-value="40">40</button>
         <button data-value="all">全部</button>
+      </div>
       </div>
 
       <h3>答對/答錯音效</h3>
@@ -106,7 +109,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-  <script src="questions.js?v=2611101151"></script>
-  <script src="app.js?v=2611101151"></script>
+  <script src="questions.js?v=2611101154"></script>
+  <script src="app.js?v=2611101154"></script>
 </body>
 </html>

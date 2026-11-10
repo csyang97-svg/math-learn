@@ -559,4 +559,42 @@ const NOTES = {
   ],
 };
 
-if (typeof module !== 'undefined') module.exports = { TOPICS, TYPES, CONCEPT_TYPES, QUESTIONS, GENERATORS, NOTES };
+// 精華題:用最少的題目涵蓋筆記上每一個觀念(照筆記順序出題)
+const ESSENTIAL = [
+  // 絕對值
+  'abs-23',     // 討論正負:定義
+  'abs-31',     // 距離法:|x-a| 是距離 → |x-a|<b
+  'abs-18',     // 距離法:|x-a|≥b
+  'abs-12',     // 距離法③:n≤x≤m 改寫(中點、距離的一半)
+  'abs-7',      // 右邊正負不確定 → 討論正負
+  'abs-4',      // 兩邊都是絕對值 → 平方法
+  'abs-29',     // 平方法②:a≥|b| ⇒ a²≥b²
+  'abs-25',     // 平方法③:|a|≥b 不可平方
+  // 封閉性
+  'closure-13', // 有理數有封閉性、無理數沒有
+  'closure-5',  // Q×Q̄ ∈ Q̄ 要 a≠0
+  'closure-6',  // Q̄+Q̄ 不一定,用 2±√3 檢查
+  'closure-11', // 反推:a∈Q、a+b∈Q̄ ⇒ b∈Q̄
+  // 分點公式
+  'section-1',  // c=(mb+na)/(m+n)
+  'section-3',  // 判斷對錯:(a+b)/3 ✗、三等分點 ✓
+  // 算幾不等式
+  'amgm-7',     // 前提 a,b>0
+  'amgm-2',     // 等號成立於 a=b
+  'amgm-4',     // 用途①和積互換
+  'amgm-5',     // 用途②倒數和
+  // 有理數
+  'rational-1', // 循環小數化分數
+  'rational-6', // 有限小數:分母只有 2、5(先約分)
+  'rational-7', // 循環小數是有理數
+  // 無理數・乘法公式
+  'irrational-1',  // 雙重根號(要加絕對值)
+  'irrational-7',  // 相等原則(係數要是有理數)
+  'irrational-10', // 根數比大小:平方比
+  'irrational-11', // 根數比大小:倒數比
+  'irrational-17', // 立方和
+  'irrational-20', // (a-b)³
+  'irrational-21', // (a+b+c)²
+];
+
+if (typeof module !== 'undefined') module.exports = { TOPICS, TYPES, CONCEPT_TYPES, ESSENTIAL, QUESTIONS, GENERATORS, NOTES };

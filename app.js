@@ -15,7 +15,11 @@ let stars = new Set(loadJSON(STAR_KEY, []));
 let settings = Object.assign({ src: 'all', topics: [], kind: 'concept', count: '20', sound: 'on' }, loadJSON(SET_KEY, {}));
 delete settings.types;   // 舊版的細項題型選擇已改成 kind
 const isConcept = it => CONCEPT_TYPES.includes(it.type);
-function kindOk(it) { return settings.kind === 'all' || (settings.kind === 'concept') === isConcept(it); }
+const CORE_ORDER = Object.fromEntries(ESSENTIAL.map((id, i) => [id, i]));
+function kindOk(it) {
+  if (settings.kind === 'core') return it.id in CORE_ORDER;
+  return settings.kind === 'all' || (settings.kind === 'concept') === isConcept(it);
+}
 function saveSettings() { saveJSON(SET_KEY, settings); }
 
 function rec(id) { return stats[id] || (stats[id] = { ok: 0, ng: 0, run: 0 }); }
@@ -110,7 +114,11 @@ function refreshHome() {
     tp.appendChild(chip(t.name, n + ' 題', settings.topics.includes(t.id), () => { toggleIn(settings.topics, t.id); saveSettings(); refreshHome(); }));
   });
   const n = pool(UNIQUE).length;
-  $('scope-info').textContent = `符合條件的題目:${n} 題` + (GENERATORS.some(g => pool([g]).length) ? '(含隨機出數字的題目)' : '');
+  const core = settings.kind === 'core';
+  $('scope-info').textContent = core
+    ? `精華題 ${n} 題:筆記上每個觀念各一題,照筆記順序全部出(不受題數限制)`
+    : `符合條件的題目:${n} 題` + (GENERATORS.some(g => pool([g]).length) ? '(含隨機出數字的題目)' : '');
+  $('count-box').classList.toggle('hidden', core);
   document.querySelectorAll('.seg').forEach(seg => {
     seg.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.value === settings[seg.dataset.name]));
   });
@@ -127,8 +135,10 @@ function instantiate(it) {
 }
 function startQuiz(items) {
   if (!items.length) { $('home-msg').textContent = '沒有符合條件的題目'; return false; }
-  const n = settings.count === 'all' ? items.length : Math.min(+settings.count, items.length);
-  const chosen = weightedPick(items, n);
+  // 精華題:全部出、照筆記順序;其他:依題數抽題(不熟、星號較常出)
+  const core = settings.kind === 'core';
+  const n = core || settings.count === 'all' ? items.length : Math.min(+settings.count, items.length);
+  const chosen = core ? items.slice().sort((a, b) => (CORE_ORDER[a.id] ?? 1e9) - (CORE_ORDER[b.id] ?? 1e9)) : weightedPick(items, n);
   quiz = { list: chosen.map(instantiate), src: chosen, i: 0, right: 0, wrong: [] };
   show('quiz');
   renderQuestion();
