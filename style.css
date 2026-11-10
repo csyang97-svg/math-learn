@@ -149,3 +149,5 @@ body { -webkit-user-select: text; user-select: text; }
 .note-card .link-btn { margin: 8px 0 0 auto; }
 .ver { text-align: center; opacity: 0.5; margin-top: 18px; }
 .msg.small.sub-h { margin-top: 16px; margin-bottom: 8px; }
+.seg-note { display: block; font-size: 11px; color: #aaa; margin-top: 2px; }
+.seg button.on .seg-note { color: #cfe0f5; }

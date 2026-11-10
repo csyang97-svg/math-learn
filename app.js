@@ -12,7 +12,10 @@ function saveJSON(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } ca
 
 let stats = loadJSON(STATS_KEY, {});            // id → {ok, ng, run(答錯後連續答對次數)}
 let stars = new Set(loadJSON(STAR_KEY, []));
-let settings = Object.assign({ src: 'all', topics: [], types: [], count: '20', sound: 'on' }, loadJSON(SET_KEY, {}));
+let settings = Object.assign({ src: 'all', topics: [], kind: 'concept', count: '20', sound: 'on' }, loadJSON(SET_KEY, {}));
+delete settings.types;   // 舊版的細項題型選擇已改成 kind
+const isConcept = it => CONCEPT_TYPES.includes(it.type);
+function kindOk(it) { return settings.kind === 'all' || (settings.kind === 'concept') === isConcept(it); }
 function saveSettings() { saveJSON(SET_KEY, settings); }
 
 function rec(id) { return stats[id] || (stats[id] = { ok: 0, ng: 0, run: 0 }); }
@@ -87,7 +90,7 @@ function srcFilter(list) {
 function pool(list = ITEMS) {
   return srcFilter(list).filter(it =>
     (!settings.topics.length || settings.topics.includes(it.topic)) &&
-    (!settings.types.length || settings.types.includes(it.type)));
+    kindOk(it));
 }
 function toggleIn(arr, v) { const i = arr.indexOf(v); i < 0 ? arr.push(v) : arr.splice(i, 1); }
 
@@ -98,18 +101,13 @@ function refreshHome() {
 
   const src = $('scope-src'); src.innerHTML = '';
   [['all', '全部題目'], ['weak', '不熟題目'], ['star', '星號題目']].forEach(([v, l]) => {
-    const n = srcFilter(UNIQUE).length;
+    const n = srcFilter(UNIQUE).filter(kindOk).length;
     src.appendChild(chip(l, settings.src === v ? n + ' 題' : null, settings.src === v, () => { settings.src = v; saveSettings(); refreshHome(); }));
   });
   const tp = $('scope-topics'); tp.innerHTML = '';
   TOPICS.forEach(t => {
-    const n = srcFilter(UNIQUE).filter(it => it.topic === t.id).length;
+    const n = srcFilter(UNIQUE).filter(it => it.topic === t.id && kindOk(it)).length;
     tp.appendChild(chip(t.name, n + ' 題', settings.topics.includes(t.id), () => { toggleIn(settings.topics, t.id); saveSettings(); refreshHome(); }));
-  });
-  const ty = $('scope-types'); ty.innerHTML = '';
-  TYPES.forEach(t => {
-    const n = srcFilter(UNIQUE).filter(it => it.type === t.id && (!settings.topics.length || settings.topics.includes(it.topic))).length;
-    ty.appendChild(chip(t.name, n + ' 題', settings.types.includes(t.id), () => { toggleIn(settings.types, t.id); saveSettings(); refreshHome(); }));
   });
   const n = pool(UNIQUE).length;
   $('scope-info').textContent = `符合條件的題目:${n} 題` + (GENERATORS.some(g => pool([g]).length) ? '(含隨機出數字的題目)' : '');
@@ -217,7 +215,7 @@ function openNotes() {
     const b = document.createElement('button');
     b.className = 'link-btn';
     b.textContent = `練習「${t.name}」›`;
-    b.onclick = () => { settings.topics = [t.id]; settings.types = []; settings.src = 'all'; saveSettings(); refreshHome(); startQuiz(pool()); };
+    b.onclick = () => { settings.topics = [t.id]; settings.src = 'all'; saveSettings(); refreshHome(); startQuiz(pool()); };
     card.appendChild(b);
     box.appendChild(card);
   });

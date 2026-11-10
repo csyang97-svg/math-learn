@@ -18,6 +18,8 @@ const TYPES = [
   { id: 'judge', name: '判斷對錯' },
   { id: 'calc', name: '計算' },
 ];
+// 首頁的「題型」選擇:觀念題 = 選解法、因果關係、判斷對錯;練習題 = 挖空、計算
+const CONCEPT_TYPES = ['method', 'cause', 'judge'];
 
 const M_ABS = ['解法一:討論正負', '解法二:距離法', '解法三:平方法'];
 const M_AMGM = ['用途①:和積互換', '用途②:倒數和', '不能直接用算幾'];
@@ -94,7 +96,7 @@ q('abs', 'blank', R`數線上 $A(a)$、$B(b)$,則 $\overline{AB}=$ ___`,
 q('abs', 'blank', R`設 $x\in\mathbb{R}$,若 $x\le0$,則 $|x|=$ ___`,
   [R`$-x$`, R`$x$`, R`$0$`, R`$\pm x$`],
   R`討論正負:$x\ge0 \Rightarrow |x|=x$;$x\le0 \Rightarrow |x|=-x$。`);
-q('abs', 'blank', R`$\left|x-\frac{m+n}{2}\right|\le\frac{m-n}{2}$ 中,$\frac{m+n}{2}$ 代表 ___`,
+q('abs', 'cause', R`$\left|x-\frac{m+n}{2}\right|\le\frac{m-n}{2}$ 中,$\frac{m+n}{2}$ 代表 ___`,
   ['兩端點的中點', '兩端點的距離', '兩端點距離的一半', '兩端點的和'],
   R`$\frac{m+n}{2}$ 是中點,$\frac{m-n}{2}$ 才是距離的一半。`);
 
@@ -152,13 +154,13 @@ q('closure', 'cause', R`若 $a\in\Qb$,且 $a+b\in\Q$,則 $b$ ___`,
 q('closure', 'judge', R`下列敘述何者正確?`,
   [R`有理數對加、減、乘、除(除數 $\ne0$)都有封閉性`, '無理數對加法有封閉性', '無理數對乘法有封閉性', '有理數加無理數可能是有理數'],
   R`有理數有封閉性;無理數沒有(用 $2\pm\sqrt3$ 檢查);有理數 + 無理數一定是無理數。`);
-q('closure', 'blank', R`$a\in\Q$、$b\in\Qb \Rightarrow ab\in\Qb$,條件是 ___`,
+q('closure', 'cause', R`$a\in\Q$、$b\in\Qb \Rightarrow ab\in\Qb$,條件是 ___`,
   [R`$a\ne0$`, R`$b\ne0$`, R`$a>0$`, R`$a$ 是整數`],
   R`筆記:$a\in\Q,\ b\in\Qb \Rightarrow a\pm b,\ a\times b,\ \cdots\in\Qb$ $(a\ne0)$。`);
-q('closure', 'blank', R`有理數有稠密性、封閉性;無理數有稠密性,___ 封閉性。`,
+q('closure', 'judge', R`有理數有稠密性、封閉性;無理數有稠密性,___ 封閉性。`,
   ['沒有', '有', '只有加法有', '只有乘法有'],
   R`無理數沒有封閉性,例如 $\sqrt2\times\sqrt2=2$。`);
-q('closure', 'blank', R`$a,b\in\Qb$ 時,$a\pm b$、$ab$ 不一定是無理數,筆記建議用 ___ 來檢查。`,
+q('closure', 'cause', R`$a,b\in\Qb$ 時,$a\pm b$、$ab$ 不一定是無理數,筆記建議用 ___ 來檢查。`,
   [R`$2+\sqrt3$ 和 $2-\sqrt3$`, R`$\sqrt2$ 和 $\sqrt3$`, R`$1$ 和 $\sqrt3$`, R`$0$ 和 $\sqrt3$`],
   R`$(2+\sqrt3)+(2-\sqrt3)=4$、$(2+\sqrt3)(2-\sqrt3)=1$,都變成有理數。($1$、$0$ 不是無理數)`);
 
@@ -183,7 +185,7 @@ q('section', 'calc', R`$c=\frac{3a+2b}{5}$,則 $\overline{AC}:\overline{CB}=$?`,
   R`$b$ 的係數是 $m=2$,$a$ 的係數是 $n=3$,所以 $m:n=2:3$。`);
 
 // ================= 算幾不等式 =================
-q('amgm', 'blank', R`算幾不等式 $\frac{a+b}{2}\ge\sqrt{ab}$ 的前提條件是 ___`,
+q('amgm', 'cause', R`算幾不等式 $\frac{a+b}{2}\ge\sqrt{ab}$ 的前提條件是 ___`,
   [R`$a,b>0$`, R`$a,b$ 為任意實數`, R`$a>b$`, R`$a+b>0$`],
   R`要 $a,b>0$。例如 $a=b=-1$:左邊 $-1$、右邊 $1$,不成立。`);
 q('amgm', 'blank', R`算幾不等式 $\frac{a+b}{2}\ge\sqrt{ab}$,等號成立於 ___`,
@@ -227,7 +229,7 @@ q('rational', 'blank', R`$0.12\overline{345}$ 化成分數時,分母是?`,
 q('rational', 'calc', R`$1.98\overline{7}=$?`,
   [R`$\frac{1987-198}{900}$`, R`$\frac{1987-19}{900}$`, R`$\frac{1987-198}{999}$`, R`$\frac{1987}{900}$`],
   R`循環 1 位 → 一個 9;不循環 2 位(98)→ 兩個 0;分子 $1987-198$。結果 $\frac{1789}{900}$。`);
-q('rational', 'blank', R`最簡分數 $\frac pq$ 可以化成有限小數,條件是分母 $q$ ___`,
+q('rational', 'cause', R`最簡分數 $\frac pq$ 可以化成有限小數,條件是分母 $q$ ___`,
   [R`只有質因數 $2$ 或 $5$($q=2^m\times5^n$)`, '是偶數', R`是 $10$ 的倍數`, R`只有質因數 $2$ 或 $3$`],
   R`筆記:分母只有 $2^m\times5^n$($m,n$ 為正整數或 $0$)。`);
 q('rational', 'judge', R`下列哪一個分數可以化成有限小數?`,
@@ -262,13 +264,13 @@ q('irrational', 'calc', R`$\sqrt{6+4\sqrt2}=$?`,
 q('irrational', 'judge', R`下列敘述何者正確?`,
   [R`$\sqrt{(\sqrt3-\sqrt5)^2}=\sqrt5-\sqrt3$`, R`$\sqrt{(\sqrt3-\sqrt5)^2}=\sqrt3-\sqrt5$`, R`$\sqrt{8-2\sqrt{15}}=\sqrt3-\sqrt5$`, R`$\sqrt{a^2}=a$ 對所有實數 $a$ 都成立`],
   R`$\sqrt{x^2}=|x|$,結果一定 $\ge0$:$|\sqrt3-\sqrt5|=\sqrt5-\sqrt3$。`);
-q('irrational', 'blank', R`相等原則:$a+b\sqrt2=c+d\sqrt2 \Rightarrow a=c,\ b=d$,前提是 ___`,
+q('irrational', 'cause', R`相等原則:$a+b\sqrt2=c+d\sqrt2 \Rightarrow a=c,\ b=d$,前提是 ___`,
   [R`$a,b,c,d$ 都是有理數`, R`$a,b,c,d$ 都是正數`, R`$a,b,c,d$ 都是無理數`, R`$a\ne c$`],
   R`反例:$3+0\cdot\sqrt2=1+\sqrt2\cdot\sqrt2$,但 $3\ne1$(這裡 $d=\sqrt2$ 不是有理數)。`);
 q('irrational', 'calc', R`若 $x,y\in\Q$,$(x-1)+(y+2)\sqrt3=4+5\sqrt3$,則 $(x,y)=$?`,
   [R`$(5,3)$`, R`$(3,5)$`, R`$(5,7)$`, R`$(4,5)$`],
   R`相等原則:$x-1=4$、$y+2=5$。`);
-q('irrational', 'blank', R`無理數的小數表示是 ___`,
+q('irrational', 'judge', R`無理數的小數表示是 ___`,
   ['無限不循環小數', '無限循環小數', '有限小數', '有限或循環小數'],
   R`能寫成分數(有限或循環小數)的是有理數;無限不循環小數才是無理數。`);
 mq('irrational', R`比較 $\sqrt3+\sqrt7$ 與 $\sqrt2+\sqrt8$ 的大小,最適合用?`, M_CMP, 0,
@@ -315,6 +317,70 @@ q('irrational', 'calc', R`若 $x+\frac1x=3$,則 $x^3+\frac1{x^3}=$?`,
 q('irrational', 'calc', R`若 $a+b+c=6$、$ab+bc+ca=11$,則 $a^2+b^2+c^2=$?`,
   ['14', '25', '36', '58'],
   R`$(a+b+c)^2=a^2+b^2+c^2+2(ab+bc+ca) \Rightarrow 36=a^2+b^2+c^2+22$。`);
+
+// ================= 更多觀念題 =================
+q('abs', 'cause', R`為什麼 $a\ge|b| \Rightarrow a^2\ge b^2$ 成立?`,
+  [R`因為 $a\ge|b|\ge0$,兩邊都不是負數,可以平方`, R`因為 $a$ 一定比 $b$ 大,大的平方就比較大`, R`因為 $b$ 一定是正數`, R`因為 $a^2\ge|b|$`],
+  R`$|b|\ge0$,所以 $a\ge|b|\ge0$:兩邊都非負才能平方,平方後 $a^2\ge|b|^2=b^2$。(只說「$a$ 比 $b$ 大」不夠,例如 $1>-3$ 但 $1<9$)`);
+q('abs', 'judge', R`下列哪一個不等式可以「直接」兩邊平方?`,
+  [R`$|x-1|\ge|x+2|$`, R`$|x-1|\ge x$`, R`$|x+3|\le 2x-1$`, R`$|2x|>x-5$`],
+  R`兩邊都是絕對值(都 $\ge0$)才能直接平方。其他三個右邊含 $x$,正負不確定,要先討論正負。`);
+q('abs', 'cause', R`為什麼 $|x-a|<b$ 的解是 $a-b<x<a+b$?`,
+  [R`因為 $|x-a|$ 代表數線上 $x$ 到 $a$ 的距離`, R`因為絕對值符號可以直接拿掉`, R`因為 $x$ 一定比 $a$ 大`, R`因為兩邊平方後就會得到`],
+  R`距離法:$|x-a|$ 是 $x$ 到 $a$ 的距離;距離小於 $b$ → 在 $a$ 左右各 $b$ 的範圍內。`);
+q('abs', 'cause', R`解 $|x+3|\le 2x$ 時,為什麼不能直接用距離法寫成 $-3-2x\le x\le -3+2x$ 就結束?`,
+  [R`因為右邊 $2x$ 不是固定的正數,正負不確定`, R`因為 $x+3$ 不是 $x-a$ 的形式`, R`因為距離法只能用在等式`, R`因為 $2x$ 一定是負數`],
+  R`距離法的 $b$ 要是「確定的正數」才代表距離。$2x$ 含未知數,要討論正負。`);
+q('abs', 'judge', R`$|x-1|<-2$ 的解是?`,
+  ['無解', R`$-1<x<3$`, R`$3<x<-1$`, '所有實數'],
+  R`絕對值(距離)一定 $\ge0$,不可能小於負數,所以無解。`);
+q('abs', 'judge', R`$|x-1|\ge-2$ 的解是?`,
+  ['所有實數', '無解', R`$x\ge-1$`, R`$x=1$`],
+  R`距離一定 $\ge0>-2$,任何 $x$ 都成立。`);
+q('closure', 'judge', R`$\sqrt2\times\sqrt8=4$,這個例子說明了什麼?`,
+  ['無理數對乘法沒有封閉性', '有理數對乘法有封閉性', R`$\sqrt2$ 其實是有理數`, '無理數乘無理數一定是有理數'],
+  R`兩個無理數相乘得到有理數 $4$,所以無理數乘法不封閉。但也不是「一定」是有理數,例如 $\sqrt2\times\sqrt3=\sqrt6$。`);
+q('closure', 'cause', R`若 $a\in\Q$、$a\ne0$,且 $ab\in\Q$,則 $b$ ___`,
+  [IN_Q, IN_QB, '不一定', R`$=1$`],
+  R`$b=\frac{ab}{a}$ 是「有理數 ÷ 非零有理數」,所以 $b\in\Q$。`);
+q('closure', 'judge', R`若 $a+b\in\Q$ 且 $a-b\in\Q$,則下列何者正確?`,
+  [R`$a$、$b$ 都是有理數`, R`$a$、$b$ 都是無理數`, '不一定', R`$a$、$b$ 一個有理數、一個無理數`],
+  R`$a=\frac{(a+b)+(a-b)}{2}$、$b=\frac{(a+b)-(a-b)}{2}$,都由有理數加減除以 $2$ 得到,所以都是有理數。`);
+q('section', 'cause', R`設 $p,q>0$,$pa+qb$ 一定落在 $a$、$b$ 之間的條件是?`,
+  [R`$p+q=1$`, R`$p=q$`, R`$p+q=2$`, R`$p>q$`],
+  R`分點公式 $\frac{n}{m+n}a+\frac{m}{m+n}b$ 的兩個係數都正而且加起來 $=1$。`);
+q('section', 'judge', R`設 $a<b$,下列哪一個「一定」在 $a$、$b$ 之間?`,
+  [R`$\frac{3a+b}{4}$`, R`$\frac{a+b}{4}$`, R`$\frac{3a+b}{2}$`, R`$\frac{a+3b}{3}$`],
+  R`$\frac{3a+b}{4}=\frac34a+\frac14b$,係數和 $=1$,是 $1:3$ 的分點。其他的係數和分別是 $\frac12$、$2$、$\frac43$。`);
+q('amgm', 'cause', R`用算幾不等式求最小值時,為什麼要檢查「等號能不能成立」?`,
+  ['等號成立,才真的取得到這個最小值', '因為等號成立時兩數一定是 0', '因為不等式不能有等號', '不用檢查,算出來的一定是最小值'],
+  R`$\ge$ 只說明「不會比這個小」;要有某個 $x$ 讓等號成立,這個值才是取得到的最小值。`);
+q('amgm', 'judge', R`$a,b>0$ 且 $a+b$ 固定時,$ab$ 什麼時候最大?`,
+  [R`$a=b$ 時`, R`$a$ 越大越好`, R`$a=0$ 時`, R`$ab$ 是固定的`],
+  R`$\sqrt{ab}\le\frac{a+b}{2}$,等號成立於 $a=b$:和固定時,兩數相等積最大。`);
+mq('amgm', R`已知 $x>1$,求 $x+\frac{1}{x-1}$ 的最小值,屬於哪一種用途?`, M_AMGM, 1,
+  R`改寫成 $(x-1)+\frac{1}{x-1}+1$,$(x-1)>0$ 且 $(x-1)\cdot\frac1{x-1}=1$ 是定值 → 倒數和。最小值 $2+1=3$($x=2$)。`);
+q('rational', 'judge', R`下列哪一個是無理數?`,
+  [R`$\sqrt2+1$`, R`$0.\overline{3}$`, R`$\sqrt9$`, R`$\frac{22}{7}$`],
+  R`有理數 + 無理數 = 無理數。$0.\overline3=\frac13$、$\sqrt9=3$、$\frac{22}{7}$ 都是有理數。`);
+q('rational', 'cause', R`為什麼循環小數一定是有理數?`,
+  ['因為它一定可以化成分數', '因為它的位數是無限的', '因為它沒有根號', '因為它一定比 1 小'],
+  R`用 $\frac{\text{全部}-\text{不循環}}{99\cdots900\cdots0}$ 就能化成分數,能寫成分數的就是有理數。`);
+q('rational', 'cause', R`$\frac13$ 不能化成有限小數,原因是?`,
+  [R`最簡分數的分母有質因數 $3$`, R`分子是 $1$`, R`分母是奇數`, R`$3$ 比 $10$ 小`],
+  R`最簡分數的分母只有 $2$、$5$ 才是有限小數。注意不是「奇數」的問題:$\frac15=0.2$。`);
+q('irrational', 'cause', R`根號「相減」比大小(如 $\sqrt7-\sqrt6$ 對 $\sqrt6-\sqrt5$),為什麼用倒數比?`,
+  ['有理化後變成根號相加,容易比大小', '因為相減的數一定是負數', '因為平方後一定相等', '因為倒數一定比較大'],
+  R`$\frac{1}{\sqrt7-\sqrt6}=\sqrt7+\sqrt6$,變成相加好比較;倒數大的,原數小。`);
+q('irrational', 'cause', R`為什麼 $\sqrt{x^2}=|x|$,要加絕對值?`,
+  [R`因為根號的結果一定 $\ge0$`, R`因為 $x$ 一定是負數`, R`因為平方後會變大`, R`因為 $x$ 一定是無理數`],
+  R`$\sqrt{\ }$ 取的是非負的平方根。例如 $\sqrt{(-3)^2}=3=|-3|$。`);
+q('irrational', 'judge', R`$\sqrt{a+b-2\sqrt{ab}}=\sqrt a-\sqrt b$($a,b>0$)什麼時候成立?`,
+  [R`$a\ge b$ 時`, R`$a\le b$ 時`, '永遠成立', '永遠不成立'],
+  R`左邊 $\ge0$,所以右邊也要 $\ge0$:$\sqrt a\ge\sqrt b$,即 $a\ge b$。一般寫成 $|\sqrt a-\sqrt b|$。`);
+q('irrational', 'cause', R`$3+0\cdot\sqrt2=1+\sqrt2\cdot\sqrt2$,但 $3\ne1$。這說明相等原則需要什麼條件?`,
+  [R`係數 $a,b,c,d$ 都要是有理數`, R`係數都要是正數`, R`$\sqrt2$ 要換成 $\sqrt3$`, '兩邊要先平方'],
+  R`這裡 $d=\sqrt2$ 不是有理數,所以不能用 $a=c$、$b=d$。`);
 
 // ================= 隨機產生的題目(每次數字不同) =================
 const ri = (lo, hi) => lo + Math.floor(Math.random() * (hi - lo + 1));
@@ -459,7 +525,7 @@ const NOTES = {
     R`$|x-a|\le b \iff a-b\le x\le a+b$`,
     R`$|x-a|\ge b \iff x\ge a+b$ 或 $x\le a-b$`,
     R`$n\le x\le m \iff \left|x-\frac{m+n}{2}\right|\le\frac{m-n}{2}$(中點、距離的一半)`,
-    R`平方法:$|a|\ge|b| \Rightarrow a^2\ge b^2$ ✓;$|a|\ge b$ 不確定 $b$ 的正負,<b>不可平方</b>`,
+    R`平方法:① $|a|\ge|b| \Rightarrow a^2\ge b^2$ ✓;② $a\ge|b| \Rightarrow a^2\ge b^2$ ✓;③ $|a|\ge b$ 不確定 $b$ 的正負,<b>不可平方</b>`,
   ],
   closure: [
     R`$a\in\Q,\ b\in\Q \Rightarrow a\pm b,\ a\times b,\ a\div b\in\Q$`,
@@ -493,4 +559,4 @@ const NOTES = {
   ],
 };
 
-if (typeof module !== 'undefined') module.exports = { TOPICS, TYPES, QUESTIONS, GENERATORS, NOTES };
+if (typeof module !== 'undefined') module.exports = { TOPICS, TYPES, CONCEPT_TYPES, QUESTIONS, GENERATORS, NOTES };

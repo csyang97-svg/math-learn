@@ -10,9 +10,9 @@
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="icon" href="icon.svg">
-  <meta name="app-version" content="2611101138">
+  <meta name="app-version" content="2611101151">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <link rel="stylesheet" href="style.css?v=2611101138">
+  <link rel="stylesheet" href="style.css?v=2611101151">
   <title>數學觀念練習</title>
 </head>
 <body>
@@ -26,12 +26,17 @@
         <div id="stat-star-box"><span id="stat-star" class="star-num">0</span><small>星號題目</small></div>
       </div>
 
+      <h3>題型</h3>
+      <div class="seg" data-name="kind">
+        <button data-value="concept">觀念題<small class="seg-note">不用計算</small></button>
+        <button data-value="practice">計算・填空</button>
+        <button data-value="all">全部</button>
+      </div>
+
       <h3>範圍</h3>
       <div id="scope-src" class="chips src"></div>
       <p class="msg small sub-h">單元(可以選好幾個,不選 = 全部)</p>
       <div id="scope-topics" class="chips"></div>
-      <p class="msg small sub-h">題型(可以選好幾個,不選 = 全部)</p>
-      <div id="scope-types" class="chips"></div>
       <p id="scope-info" class="msg small" style="margin-top:10px"></p>
 
       <h3>題數</h3>
@@ -101,7 +106,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-  <script src="questions.js?v=2611101138"></script>
-  <script src="app.js?v=2611101138"></script>
+  <script src="questions.js?v=2611101151"></script>
+  <script src="app.js?v=2611101151"></script>
 </body>
 </html>
